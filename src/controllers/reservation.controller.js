@@ -13,10 +13,10 @@ const createReservation = async (req, res) => {
     dateOut
   });
 
-  res.redirect('/profile'); // o donde prefieras mostrar la confirmación
+  res.redirect('/profile'); 
 };
 
-// Ver reservas del huésped actual
+
 const getUserReservations = async (req, res) => {
   const reservations = await Reservation.find({ guest: req.user._id })
     .populate('room')

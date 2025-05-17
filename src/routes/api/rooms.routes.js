@@ -10,17 +10,17 @@ const {
 
 const router = express.Router();
 
-// Ver habitaciones
+
 router.get('/', getAllRooms);
 
-// Admin: crear habitación
+
 router.post('/',
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => req.user.role === 'admin' ? next() : res.sendStatus(403),
   createRoom
 );
 
-// Admin: editar habitación
+
 router.get('/edit/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => req.user.role === 'admin' ? next() : res.sendStatus(403),
@@ -33,7 +33,7 @@ router.post('/edit/:id',
   updateRoom
 );
 
-// Admin: eliminar
+
 router.get('/delete/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => req.user.role === 'admin' ? next() : res.sendStatus(403),
