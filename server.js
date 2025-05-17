@@ -10,12 +10,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Middlewares
+//Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Handlebars
+//Handlebars
 const { engine } = require('express-handlebars');
 app.engine('handlebars', engine({
   helpers: {
@@ -26,11 +26,11 @@ app.engine('handlebars', engine({
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'src/views'));
 
-// Passport
+//Passport
 initPassport();
 app.use(passport.initialize());
 
-// Rutas
+//Rutas
 const sessionRoutes = require('./src/routes/api/sessions.routes');
 const roomRoutes = require('./src/routes/api/rooms.routes');
 const reservationRoutes = require('./src/routes/api/reservations.routes');
@@ -41,7 +41,7 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/', viewRoutes);
 
-// Conexión Mongo
+//Conexiónes
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('🟢 Conectado a MongoDB');
