@@ -1,0 +1,12 @@
+<h1>Perfil de {{user.first_name}}</h1>
+
+<h2>Mis Reservas</h2>
+<ul>
+  {{#each reservations}}
+    <li>
+      <strong>Habitación:</strong> {{this.room.name}}<br>
+      <strong>Desde:</strong> {{this.dateIn}}<br>
+      <strong>Hasta:</strong> {{this.dateOut}}
+    </li>
+  {{/each}}
+</ul>

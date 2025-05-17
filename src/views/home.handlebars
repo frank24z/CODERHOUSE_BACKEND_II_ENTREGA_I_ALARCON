@@ -1,0 +1,12 @@
+<div class="text-center">
+  <h1 class="mt-4">Bienvenido al Hotel</h1>
+  <p class="lead">Reservá habitaciones cómodas y seguras desde nuestra plataforma.</p>
+
+  {{#if user}}
+    <p class="text-success">Estás logueado como <strong>{{user.first_name}} ({{user.role}})</strong></p>
+    <a href="/profile" class="btn btn-primary">Ir a mi perfil</a>
+  {{else}}
+    <a href="/register" class="btn btn-outline-primary me-2">Registrarse</a>
+    <a href="/login" class="btn btn-primary">Iniciar sesión</a>
+  {{/if}}
+</div>
