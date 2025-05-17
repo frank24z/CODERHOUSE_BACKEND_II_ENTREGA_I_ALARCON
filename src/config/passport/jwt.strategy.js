@@ -2,6 +2,7 @@ const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'coderBackendSecret';
 
+
 const getJWTStrategy = (passport) => {
   passport.use('jwt', new JWTStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
