@@ -5,19 +5,22 @@ const { getUserReservations } = require('../../controllers/reservation.controlle
 
 const router = express.Router();
 
-
 router.get('/', (req, res) => {
   res.render('home');
 });
-
 
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
-
 router.get('/register', (req, res) => {
   res.render('register');
+});
+
+// ✅ Logout borra cookie y redirige
+router.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/');
 });
 
 router.get('/profile',
@@ -25,16 +28,11 @@ router.get('/profile',
   getUserReservations
 );
 
-
 router.get('/rooms',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    try {
-      const rooms = await Room.find().lean();
-      res.render('rooms', { rooms, user: req.user });
-    } catch (err) {
-      res.status(500).send('Error al cargar habitaciones');
-    }
+    const rooms = await Room.find().lean();
+    res.render('rooms', { rooms, user: req.user });
   }
 );
 

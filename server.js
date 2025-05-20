@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const passport = require('passport');
+const cookieParser = require('cookie-parser'); // 👈 nuevo
 const { initPassport } = require('./src/config/passport/passport.config');
 
 dotenv.config();
@@ -10,12 +11,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-//Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser()); // 👈 habilitar lectura de cookies
 
-//Handlebars
+// Handlebars
 const { engine } = require('express-handlebars');
 app.engine('handlebars', engine({
   helpers: {
@@ -26,11 +27,11 @@ app.engine('handlebars', engine({
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'src/views'));
 
-//Passport
+// Passport
 initPassport();
 app.use(passport.initialize());
 
-//Rutas
+// Rutas
 const sessionRoutes = require('./src/routes/api/sessions.routes');
 const roomRoutes = require('./src/routes/api/rooms.routes');
 const reservationRoutes = require('./src/routes/api/reservations.routes');
@@ -41,7 +42,7 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/', viewRoutes);
 
-//Conexiónes
+// Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('🟢 Conectado a MongoDB');

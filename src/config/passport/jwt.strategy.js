@@ -1,12 +1,12 @@
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'coderBackendSecret';
-
-
 const getJWTStrategy = (passport) => {
   passport.use('jwt', new JWTStrategy({
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: JWT_SECRET
+    jwtFromRequest: ExtractJwt.fromExtractors([
+      ExtractJwt.fromAuthHeaderAsBearerToken(),
+      req => req.cookies?.token  // 👈 ahora también busca en cookie
+    ]),
+    secretOrKey: process.env.JWT_SECRET
   }, async (payload, done) => {
     try {
       return done(null, payload.user);
